@@ -572,10 +572,24 @@ func main() {
 		middleware.RateLimit(cfg, limiter),
 	)
 
+	finalHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/healthz" {
+			if r.Method != http.MethodGet {
+				http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+				return
+			}
+			w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+			w.WriteHeader(http.StatusOK)
+			_, _ = w.Write([]byte("OK"))
+			return
+		}
+		handler.ServeHTTP(w, r)
+	})
+
 	gatewayAddr := appCfg.GatewayAddr
 	server := &http.Server{
 		Addr:    gatewayAddr,
-		Handler: handler,
+		Handler: finalHandler,
 	}
 
 	go func() {
