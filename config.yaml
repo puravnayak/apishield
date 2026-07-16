@@ -1,0 +1,37 @@
+tiers:
+  Enterprise:
+    limits:
+      - route: "/api/v1/payments"
+        limit:
+          algorithm: "sliding_window"
+          requests: 1000
+          window: "1m"
+      - route: "/*"
+        limit:
+          algorithm: "sliding_window"
+          requests: 5000
+          window: "1m"
+  Pro:
+    limits:
+      - route: "/api/v1/payments"
+        limit:
+          algorithm: "sliding_window"
+          requests: 100
+          window: "1m"
+      - route: "/*"
+        limit:
+          algorithm: "sliding_window"
+          requests: 500
+          window: "1m"
+  Free:
+    limits:
+      - route: "/api/v1/payments"
+        limit:
+          algorithm: "token_bucket"
+          requests: 10
+          window: "1m"
+      - route: "/*"
+        limit:
+          algorithm: "sliding_window"
+          requests: 50
+          window: "1m"

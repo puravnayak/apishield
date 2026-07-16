@@ -1,0 +1,26 @@
+# Environment secrets (never commit)
+.env
+!.env.example
+
+# Go build artifacts
+/bin/
+*.exe
+
+# Benchmarks output
+benchmarks/cpu.prof
+benchmarks/summary.json
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Dashboard
+dashboard/node_modules/
+dashboard/dist/
+
+# AI guidelines
+.ai/
+
