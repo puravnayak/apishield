@@ -13,11 +13,13 @@ FROM alpine:3.19
 WORKDIR /app
 RUN apk add --no-cache ca-certificates
 
-# Copy binaries and configuration
+# 1. Copy the compiled binaries from the builder stage
 COPY --from=builder /app/gateway .
 COPY --from=builder /app/worker .
-COPY --from=builder /app/entrypoint.sh .
+
+# 2. Copy the shell script and config directly from your host machine
 COPY config.yaml .
+COPY entrypoint.sh .
 
 # Make the entrypoint script executable
 RUN chmod +x entrypoint.sh
