@@ -17,9 +17,9 @@ RUN apk add --no-cache ca-certificates
 COPY --from=builder /app/gateway .
 COPY --from=builder /app/worker .
 
-# 2. Copy the shell script and config directly from your host machine
+# 2. Copy the shell script from its actual folder and config from root
 COPY config.yaml .
-COPY entrypoint.sh .
+COPY scripts/entrypoint.sh .
 
 # Make the entrypoint script executable
 RUN chmod +x entrypoint.sh
